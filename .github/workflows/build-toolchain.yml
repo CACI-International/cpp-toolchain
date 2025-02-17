@@ -17,14 +17,14 @@ jobs:
     name: gcc ${{ matrix.target.name }}
     runs-on: ${{ matrix.target.os }}
     env:
-      gccdir: gcc/targets/${{ matrix.target.name }}/toolchain
+      gccdir: toolchain/gcc/targets/${{ matrix.target.name }}/toolchain
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         id: cache
         with:
-          path: gcc/targets/${{ matrix.target.name }}/toolchain/**/*
-          key: gcc-${{ matrix.target.os }}-${{ matrix.target.name }}-${{ hashFiles('gcc/Makefile', 'gcc/targets/*/.config') }}
+          path: toolchain/gcc/targets/${{ matrix.target.name }}/toolchain/**/*
+          key: gcc-${{ matrix.target.os }}-${{ matrix.target.name }}-${{ hashFiles('toolchain/gcc/Makefile', 'gcc/targets/*/.config') }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -37,7 +37,7 @@ jobs:
           cd ~/texinfo && ./configure && make && sudo make install
       - name: Build gcc
         if: steps.cache.outputs.cache-hit != 'true'
-        run: make -C gcc targets/${{ matrix.target.name }}/toolchain
+        run: make -C toolchain/gcc targets/${{ matrix.target.name }}/toolchain
       - name: Create artifact archive
         run: tar -cf gcc-${{ matrix.target.name }}.tar $gccdir # maintain case-sensitivity
       - name: Upload build log
@@ -45,7 +45,7 @@ jobs:
         if: ${{ failure() }}
         with:
           name: ${{ matrix.target.name }} log
-          path: gcc/targets/${{ matrix.target.name }}/build.log
+          path: toolchain/gcc/targets/${{ matrix.target.name }}/build.log
           if-no-files-found: error
       - name: Upload built gcc
         uses: actions/upload-artifact@v4
@@ -72,7 +72,7 @@ jobs:
       - uses: bazel-contrib/setup-bazel@0.13.0
         with:
           bazelisk-cache: true
-          disk-cache: ${{ github.job }} ${{ matrix.target.name }}
+          disk-cache: ${{ github.job }}-${{ matrix.target.name }}
           repository-cache: true
       - name: Download built gcc
         uses: actions/download-artifact@v4
@@ -81,12 +81,12 @@ jobs:
       - name: Build sysroot
         run: |
           tar -xf gcc-${{ matrix.target.name }}.tar
-          bazel build //linux:sysroot-package-${{ matrix.target.name }}
+          cd toolchain && bazel build //linux:sysroot-package-${{ matrix.target.name }}
       - name: Upload built sysroot
         uses: actions/upload-artifact@v4
         with:
           name: sysroot-${{ matrix.target.name }}
-          path: bazel-bin/linux/sysroot-*.tar.xz
+          path: toolchain/bazel-bin/linux/sysroot-*.tar.xz
           if-no-files-found: error
 
   build-llvm:
@@ -110,13 +110,8 @@ jobs:
       - uses: bazel-contrib/setup-bazel@0.13.0
         with:
           bazelisk-cache: true
-          disk-cache: ${{ github.job }} ${{ matrix.target.name }}
-          repository-cache: true
-      - name: Install dependencies
-        if: ${{ contains(matrix.target.name, 'linux') }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libicu-dev
+          disk-cache: ${{ github.job }}-${{ matrix.target.name }}
+          repository-cache: toolchain/MODULE.bazel
       - name: Download built gcc
         if: ${{ contains(matrix.target.name, 'linux') }}
         uses: actions/download-artifact@v4
@@ -125,10 +120,10 @@ jobs:
       - name: Build llvm
         run: |
           find . -name "gcc-*.tar" -exec tar -xf {} \;
-          bazel build //${{ matrix.target.type }}:llvm-package
+          cd toolchain && bazel build //${{ matrix.target.type }}:llvm-package
       - name: Upload built llvm
         uses: actions/upload-artifact@v4
         with:
           name: llvm-${{ matrix.target.name }}
-          path: bazel-bin/${{ matrix.target.type }}/llvm-*.tar.xz
+          path: toolchain/bazel-bin/${{ matrix.target.type }}/llvm-*.tar.xz
           if-no-files-found: error
