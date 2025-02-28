@@ -81,7 +81,7 @@ jobs:
           module-root: toolchain
           bazelisk-cache: true
           disk-cache: ${{ github.job }}-${{ matrix.target.name }}
-          max-disk-cache-size: 0.15
+          max-disk-cache-size: 0.01
           repository-cache: true
       - name: Download built gcc
         uses: actions/download-artifact@v4
