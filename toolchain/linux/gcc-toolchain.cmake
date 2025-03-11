@@ -31,8 +31,8 @@ if(DEFINED ENV{ZLIB_ROOT})
 endif()
 
 if("%target%" STREQUAL "aarch64-unknown-linux-gnu")
-    set(CMAKE_C_FLAGS "$CMAKE_C_FLAGS -DAT_HWCAP2=26")
-    set(CMAKE_CXX_FLAGS "$CMAKE_CXX_FLAGS -DAT_HWCAP2=26")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAT_HWCAP2=26")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAT_HWCAP2=26")
 endif()
 
 get_cmake_property(_variableNames VARIABLES)
