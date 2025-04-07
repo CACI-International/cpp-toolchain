@@ -18,7 +18,7 @@ def portable_cc_toolchain(
     )
 
     cc_toolchain(
-        name = name + "_cc_toolchain",
+        name = name,
         args = [
             name + "_target_args",
             Label("//detail/args:default"),
@@ -38,9 +38,36 @@ def portable_cc_toolchain(
         supports_header_parsing = True,
     )
 
-    native.toolchain(
-        name = name,
-        toolchain = name + "_cc_toolchain",
-        toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
-        **kwargs
-    )
+_HOSTS = [
+    ["@platforms//os:linux", "@platforms//cpu:x86_64"],
+    ["@platforms//os:linux", "@platforms//cpu:aarch64"],
+    ["@platforms//os:macos", "@platforms//cpu:x86_64"],
+    ["@platforms//os:macos", "@platforms//cpu:arm64"],
+]
+
+_TARGETS = [
+    ["@platforms//os:linux", "@platforms//cpu:x86_64"],
+    ["@platforms//os:linux", "@platforms//cpu:armv7"],
+    ["@platforms//os:linux", "@platforms//cpu:aarch64"],
+    ["@platforms//os:macos"],
+]
+
+def _supported_combination(host, target):
+    if "@platforms//os:linux" in host and "@platforms//os:macos" in target:
+        return False
+    return True
+
+def make_toolchains(name, portable_cc_toolchain):
+    for host in _HOSTS:
+        for target in _TARGETS:
+            if _supported_combination(host, target):
+                toolchain_name = name + \
+                                 "_".join([x.removeprefix("@platforms//os:").removeprefix("@platforms//cpu:") for x in host]) + \
+                                 "_".join([x.removeprefix("@platforms//os:").removeprefix("@platforms//cpu:") for x in target])
+                native.toolchain(
+                    name = toolchain_name,
+                    toolchain = portable_cc_toolchain,
+                    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+                    exec_compatible_with = host,
+                    target_compatible_with = target,
+                )

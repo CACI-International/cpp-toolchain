@@ -1,4 +1,7 @@
-module(name = "test", version = "0.0.0")
+module(
+    name = "test",
+    version = "0.0.0",
+)
 
 bazel_dep(name = "portable_cc_toolchain")
 local_path_override(
@@ -6,4 +9,7 @@ local_path_override(
     path = "..",
 )
 
-register_toolchains("@portable_cc_toolchain")
+toolchain = use_extension("@portable_cc_toolchain//:extensions.bzl", "toolchain")
+use_repo(toolchain, "portable_cc_toolchains")
+
+register_toolchains("@portable_cc_toolchains//...")
