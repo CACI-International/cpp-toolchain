@@ -13,18 +13,9 @@ bazel_dep(name = "aspect_bazel_lib", version = "2.13.0")
 bazel_dep(name = "abseil-cpp", version = "20250127.1")
 
 bazel_dep(name = "stardoc", version = "0.8.0", dev_dependency = True)
-bazel_dep(name = "rules_python", version = "1.2.0", dev_dependency = True)
 
 # https://github.com/bazelbuild/bazel/issues/24426#issuecomment-2574862618
 bazel_dep(name = "re2", version = "2024-07-02.bcr.1", dev_dependency = True)
-
-pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip", dev_dependency = True)
-pip.parse(
-    hub_name = "pypi",
-    python_version = "3.11",
-    requirements_lock = "//detail/assets:requirements_lock.txt",
-)
-use_repo(pip, "pypi")
 
 host_platform = use_extension("@platforms//host:extension.bzl", "host_platform")
 use_repo(host_platform, "host_platform")
