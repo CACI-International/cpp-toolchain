@@ -1,8 +1,39 @@
 load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("cmake.bzl", "cmake")
-load("config.bzl", "LLVM_TOOLS", "LLVM_VERSION")
 
 package(default_visibility = ["//visibility:public"])
+
+llvm_tools = [
+    "llvm-ar",
+    "llvm-ranlib",
+    "llvm-size",
+    "llvm-nm",
+    "llvm-strip",
+    "llvm-objcopy",
+    "llvm-objdump",
+    "llvm-cxxfilt",
+    "llvm-addr2line",
+    "llvm-strings",
+    "llvm-symbolizer",
+    "llvm-cov",
+
+    # Linux tooling, but may be useful on macOS
+    "llvm-readelf",
+    "llvm-readobj",
+
+    # Apple tooling, but may be useful on Linux
+    "llvm-install-name-tool",
+    "llvm-lipo",
+    "llvm-libtool-darwin",
+    "llvm-otool",
+]
+
+llvm_projects = [
+    "clang",
+    "lld",
+    "lldb",
+    "clang-tools-extra",
+]
 
 common_llvm_flags = {
     "LLVM_TARGETS_TO_BUILD": "X86;ARM;AArch64;NVPTX",
@@ -10,7 +41,7 @@ common_llvm_flags = {
     "LLVM_INSTALL_BINUTILS_SYMLINKS": "ON",
     "LLVM_INSTALL_CCTOOLS_SYMLINKS": "ON",
     "LLVM_INSTALL_TOOLCHAIN_ONLY": "ON",
-    "LLVM_TOOLCHAIN_TOOLS": ";".join(LLVM_TOOLS),
+    "LLVM_TOOLCHAIN_TOOLS": ";".join(llvm_tools),
     "LLVM_INCLUDE_DOCS": "OFF",
     "LLVM_INCLUDE_TESTS": "OFF",
     "LLVM_INCLUDE_EXAMPLES": "OFF",
@@ -21,26 +52,15 @@ common_llvm_flags = {
     "LLDB_ENABLE_LIBEDIT": "OFF",
     "LLDB_ENABLE_CURSES": "OFF",
     "LLDB_ENABLE_LIBXML2": "OFF",
+    "LLVM_ENABLE_PROJECTS": ";".join(llvm_projects),
 }
 
 linux_llvm_flags = {
-    "LLVM_ENABLE_PROJECTS": ";".join([
-        "clang",
-        "lld",
-        "lldb",
-        "clang-tools-extra",
-    ]),
     "LLVM_STATIC_LINK_CXX_STDLIB": "ON",
     "CLANG_DEFAULT_LINKER": "lld",
 }
 
 macos_llvm_flags = {
-    "LLVM_ENABLE_PROJECTS": ";".join([
-        "clang",
-        "lld",
-        "lldb",
-        "clang-tools-extra",
-    ]),
     "LLVM_ENABLE_RUNTIMES": ";".join([
         "libcxx",
         "libcxxabi",
