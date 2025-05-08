@@ -1,5 +1,5 @@
 load("@bazel_skylib//lib:selects.bzl", "selects")
-load("//:config.bzl", "APPLE_TARGETS", "LINUX_TARGETS")
+load("//:config.bzl", "APPLE_TARGETS", "LINUX_TARGETS", "WINDOWS_TARGETS")
 
 [
     selects.config_setting_group(
@@ -21,4 +21,15 @@ load("//:config.bzl", "APPLE_TARGETS", "LINUX_TARGETS")
         ],
     )
     for triple in LINUX_TARGETS
+]
+
+[
+    selects.config_setting_group(
+        name = "config-" + triple,
+        match_all = [
+            "@platforms//os:windows",
+            "@platforms//cpu:" + triple.split("-")[0],
+        ],
+    )
+    for triple in WINDOWS_TARGETS
 ]

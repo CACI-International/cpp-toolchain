@@ -15,3 +15,8 @@ LINUX_TARGETS = [
     "armv7-unknown-linux-gnueabihf",
     "x86_64-unknown-linux-gnu",
 ]
+
+WINDOWS_TARGETS = [
+    "x86_64-pc-windows-msvc",
+    "aarch64-pc-windows-msvc",
+]

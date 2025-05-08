@@ -16,7 +16,6 @@ package(default_visibility = ["//visibility:public"])
             cache_entries = {
                 "LIBOMP_ENABLE_SHARED": "OFF",
                 "LIBOMP_CXXFLAGS": "-fPIC -fvisibility=hidden -fvisibility-inlines-hidden",
-                "LLVM_DIR": "$EXT_BUILD_ROOT/$(location //:llvm)/lib/cmake/llvm",
                 "LIBOMP_OMPD_GDB_SUPPORT": "OFF",  # requires python
                 "OPENMP_ENABLE_LIBOMPTARGET": "OFF",
             },
@@ -91,12 +90,6 @@ package(default_visibility = ["//visibility:public"])
     )
     for target in LINUX_TARGETS
 ]
-
-# zlib is a runtime dependency of LLVM
-cmake(
-    name = "zlib",
-    lib_source = "@zlib",
-)
 
 COMPILER_RT_SRCS = {
     "compiler-rt-" + target: "compiler-rt-{}:lib/clang/{}".format(
