@@ -92,4 +92,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
 
 elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
 
+    set(LLVM_ENABLE_RUNTIMES "compiler-rt" CACHE STRING "")
+    set(LLVM_RUNTIME_TARGETS "default" CACHE STRING "")
+
 endif()
