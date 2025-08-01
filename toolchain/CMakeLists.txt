@@ -20,6 +20,7 @@ FetchContent_MakeAvailable(llvm-source)
 FetchContent_GetProperties(llvm-source SOURCE_DIR llvm_source_dir)
 
 # Load OS-specific LLVM build script
+include(${CMAKE_SOURCE_DIR}/cmake/libxml2.cmake)
 if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
     add_subdirectory(gcc)
     include(${CMAKE_SOURCE_DIR}/cmake/llvm-linux.cmake)

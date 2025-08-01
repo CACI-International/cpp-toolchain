@@ -51,14 +51,30 @@ ExternalProject_Add(zlib
         -DCMAKE_BUILD_TYPE=Release
 )
 
+include(${CMAKE_SOURCE_DIR}/cmake/libxml2.cmake)
+ExternalProject_Add(libxml2
+    GIT_REPOSITORY https://gitlab.gnome.org/GNOME/libxml2.git
+    GIT_TAG        v2.14.5
+    DEPENDS gcc-toolchain-${host_triple}
+    CMAKE_GENERATOR ${CMAKE_GENERATOR}
+    CMAKE_ARGS
+        ${compile_with_gcc_for_host}
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        -DCMAKE_BUILD_TYPE=Release
+        ${libxml2_flags}
+)
+
 ExternalProject_Get_Property(zlib INSTALL_DIR)
 set(zlib_dir ${INSTALL_DIR})
+
+ExternalProject_Get_Property(libxml2 INSTALL_DIR)
+set(libxml2_dir ${INSTALL_DIR})
 
 # Build LLVM for the host
 ExternalProject_Add(llvm
     SOURCE_DIR ${llvm_source_dir}
     INSTALL_DIR ${CMAKE_BINARY_DIR}/install/llvm
-    DEPENDS zlib gcc-toolchain-${host_triple}
+    DEPENDS zlib libxml2 gcc-toolchain-${host_triple}
     SOURCE_SUBDIR llvm
     CMAKE_GENERATOR ${CMAKE_GENERATOR}
     CMAKE_ARGS
@@ -67,6 +83,8 @@ ExternalProject_Add(llvm
         -DCMAKE_BUILD_TYPE=Release
         ${compile_with_gcc_for_host}
         -DZLIB_ROOT=${zlib_dir}
+        -DCMAKE_PREFIX_PATH=${libxml2_dir}
+        -DCMAKE_FIND_PACKAGE_PREFER_CONFIG=ON
 )
 
 ExternalProject_Get_Property(llvm INSTALL_DIR)
