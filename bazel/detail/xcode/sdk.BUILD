@@ -1,20 +1,14 @@
-load("@bazel_skylib//rules/directory:directory.bzl", "directory")
-load("@rules_cc//cc/toolchains/args:sysroot.bzl", "cc_sysroot")
+load("@rules_cc//cc/toolchains:args.bzl", "cc_args")
 
-directory(
-    name = "sdk_link",
-    srcs = glob(
-        [
-            "usr/include/**/*",
-            "usr/lib/**/*",
-            "System/Library/Frameworks/**/*",
-        ],
-    ),
-)
-
-cc_sysroot(
+cc_args(
     name = "sdk",
-    data = ["sdk_link"],
-    sysroot = "sdk_link",
+    actions = [
+        "@rules_cc//cc/toolchains/actions:assembly_actions",
+        "@rules_cc//cc/toolchains/actions:c_compile",
+        "@rules_cc//cc/toolchains/actions:cpp_compile_actions",
+        "@rules_cc//cc/toolchains/actions:link_actions",
+    ],
+    allowlist_absolute_include_directories = ["{{XCODE_PATH}}"],
+    args = ["--sysroot={{XCODE_PATH}}"],
     visibility = ["//visibility:public"],
 )
