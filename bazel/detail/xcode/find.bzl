@@ -5,12 +5,7 @@ def _find_xcode_sdk(rctx):
         fail("could not find sdk `{}`, do you have xcode installed?\n{}".format(rctx.attr.sdk, result.stderr))
     sdk_path = str(rctx.path(result.stdout.strip()).realpath)
 
-    # Copy the SDK to this repository, but exclude the Ruby framework, which has recursive symlinks that break Bazel glob
-    ruby_framework = "System/Library/Frameworks/Ruby.framework"
-    result = rctx.execute(["rsync", "-a", "--exclude", ruby_framework, sdk_path + "/", "."])
-    if result.return_code != 0:
-        fail("could not copy sdk:\n{}".format(result.stderr))
-    rctx.file("BUILD", rctx.read(Label("sdk.BUILD")))
+    rctx.file("BUILD", rctx.read(Label("sdk.BUILD")).replace("{{XCODE_PATH}}", sdk_path))
 
 find_xcode_sdk = repository_rule(
     implementation = _find_xcode_sdk,
