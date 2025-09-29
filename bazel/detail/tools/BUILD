@@ -74,7 +74,7 @@ EXE_EXT = ".exe" if "windows" in HOST_TARGET else ""
             out = tool + SCRIPT_EXT,
             data = ["@llvm-{}//:bin/{}{}".format(HOST_TARGET, tool, EXE_EXT)],
             substitutions = {
-                "TOOL": "$(execpath @llvm-{}//:bin/{}{})".format(HOST_TARGET, tool, EXE_EXT),
+                "{{TOOL}}": "$(execpath @llvm-{}//:bin/{}{})".format(HOST_TARGET, tool, EXE_EXT),
             },
             template = "wrapper" + SCRIPT_EXT,
         ),
@@ -82,7 +82,7 @@ EXE_EXT = ".exe" if "windows" in HOST_TARGET else ""
             name = tool + "_bat",
             out = tool + ".bat",
             substitutions = {
-                "TOOL": tool,
+                "{{TOOL}}": tool,
             },
             template = "wrapper.bat",
         ),
