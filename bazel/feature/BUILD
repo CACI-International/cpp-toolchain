@@ -11,6 +11,7 @@ filegroup(
 
 FEATURES = [
     "//feature/misc:debug_symbols",
+    "//feature/misc:hide_symbols",
     "//feature/misc:strip_unused_dynamic_libs",
     "//feature/misc:thinlto",
     "//feature/misc:coverage",
