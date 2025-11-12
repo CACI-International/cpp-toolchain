@@ -90,14 +90,14 @@ cc_args(
         '-D__DATE__="redacted"',
         '-D__TIMESTAMP__="redacted"',
         '-D__TIME__="redacted"',
-        "-ffile-prefix-map=__BAZEL_EXECUTION_ROOT__=.",
+        "-ffile-compilation-dir=.",
     ],
 )
 
 cc_args(
     name = "reproducible_link_args_apple",
     actions = ["@rules_cc//cc/toolchains/actions:link_actions"],
-    args = ["-Wl,-oso_prefix,__BAZEL_EXECUTION_ROOT__/"],
+    args = ["-Wl,-oso_prefix,."],
 )
 
 cc_args_list(
