@@ -20,9 +20,9 @@ jobs:
           - name: aarch64-unknown-linux-gnu
             runs-on: ubuntu-24.04-arm
           - name: x86_64-apple-macos
-            runs-on: macos-13
+            runs-on: macos-15-intel
           - name: arm64-apple-macos
-            runs-on: macos-14
+            runs-on: macos-15
           - name: x86_64-pc-windows-msvc
             runs-on: windows-2025
         target:
@@ -46,9 +46,9 @@ jobs:
       matrix:
         host:
           - name: x86_64-apple-macos
-            runs-on: macos-13
+            runs-on: macos-15-intel
           - name: arm64-apple-macos
-            runs-on: macos-14
+            runs-on: macos-15
         target:
           - x86_64-apple-macos
           - arm64-apple-macos

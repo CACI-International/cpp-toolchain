@@ -6,7 +6,7 @@ load("//detail:host.bzl", "HOST_TARGET")
 alias(
     name = "tools",
     actual = select({
-        "@platforms//os:macos": ":macos_tools",
+        "@rules_cc//cc/toolchains/args/archiver_flags:use_libtool_on_macos_setting": ":macos_libtool_tools",
         "//conditions:default": ":default_tools",
     }),
     visibility = ["//visibility:public"],
@@ -29,7 +29,7 @@ cc_tool_map(
 )
 
 cc_tool_map(
-    name = "macos_tools",
+    name = "macos_libtool_tools",
     tools = DEFAULT_TOOLS | {
         "@rules_cc//cc/toolchains/actions:ar_actions": ":llvm-libtool-darwin",
     },
