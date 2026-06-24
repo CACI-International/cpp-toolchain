@@ -1,7 +1,10 @@
 name: Test CMake rules
 
 on:
+  pull_request:
   push:
+    branches:
+      - main
   workflow_call:
     inputs:
       use-built-toolchain:
