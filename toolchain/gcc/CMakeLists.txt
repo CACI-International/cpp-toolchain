@@ -13,7 +13,7 @@ set(toolchain_targets
 
 ExternalProject_Add(crosstool-ng
     GIT_REPOSITORY https://github.com/crosstool-ng/crosstool-ng.git
-    GIT_TAG ec7070da386b6526d7fbd0246adcccb9cc095d8b
+    GIT_TAG 203a48cb11ebb39e288b386e9c35d99ab4e7714b
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND
         ./bootstrap && ./configure --prefix=<INSTALL_DIR>
