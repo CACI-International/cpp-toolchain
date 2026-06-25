@@ -38,6 +38,7 @@ jobs:
         run: |
           echo "PORTABLE_CC_TOOLCHAIN_LLVM=`pwd`/llvm-${{ inputs.host }}.tar.xz" >> $GITHUB_ENV
           echo "PORTABLE_CC_TOOLCHAIN_SYSROOT=`pwd`/sysroot-${{ inputs.target }}.tar.xz" >> $GITHUB_ENV
+          echo "PORTABLE_CC_TOOLCHAIN_COMPILER_RT_LINUX=`pwd`/compiler-rt-linux.tar.xz" >> $GITHUB_ENV
 
       - name: Build and Test (Debug)
         working-directory: cmake/test

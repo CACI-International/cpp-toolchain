@@ -9,7 +9,7 @@ include(FetchContent)
 include(${CMAKE_SOURCE_DIR}/cmake/host-triple.cmake)
 
 # Download LLVM here, because we use it in multiple ExternalProjects
-set(llvm_version 20.1.8)
+set(llvm_version 22.1.8)
 string(REGEX MATCH "^([0-9]+)" llvm_major_version ${llvm_version})
 
 FetchContent_Declare(llvm-source

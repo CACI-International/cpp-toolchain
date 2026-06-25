@@ -1,0 +1,31 @@
+FROM ubuntu:22.04
+
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install crosstool-ng build dependencies
+RUN apt-get update && apt-get install -y \
+    cmake \
+    build-essential \
+    git \
+    autoconf \
+    automake \
+    bison \
+    flex \
+    gawk \
+    help2man \
+    libncurses5-dev \
+    libtool \
+    libtool-bin \
+    texinfo \
+    unzip \
+    wget \
+    xz-utils \
+    python3 \
+    file \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace/toolchain/gcc
+
+# Default command
+CMD ["/bin/bash"]

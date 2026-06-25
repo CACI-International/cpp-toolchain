@@ -1,0 +1,78 @@
+#!/bin/bash
+# Generic development script entrypoint
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+COMMAND=$1
+shift || true
+
+# Show help
+if [ -z "$COMMAND" ]; then
+    cat << 'EOF'
+Usage: ./scripts/dev [docker] <command> [args...]
+
+Commands:
+  build <target> [args]       Build CMake target
+  ct-ng:menuconfig <target>   Interactive GCC configuration
+  ct-ng:olddefconfig          Update all GCC defconfigs
+
+Docker:
+  docker <command> [args]  Run command in Docker
+  docker shell            Interactive Docker shell
+
+Examples:
+  ./scripts/dev build llvm-x86_64-unknown-linux-gnu
+  ./scripts/dev ct-ng:menuconfig x86_64-unknown-linux-gnu
+  ./scripts/dev docker build llvm-arm64-apple-macos
+  ./scripts/dev docker ct-ng:menuconfig x86_64-unknown-linux-gnu
+  ./scripts/dev docker shell
+  ./scripts/dev docker ct-ng --version
+EOF
+    exit 1
+fi
+
+# Check if first arg is "docker"
+if [ "$COMMAND" = "docker" ]; then
+    COMMAND=$1
+    shift || true
+    [ -z "$COMMAND" ] && { echo "Error: docker requires a command" >&2; exit 1; }
+    
+    # Route commands through docker
+    case "$COMMAND" in
+        build)
+            exec "$SCRIPT_DIR/lib/docker-runner.sh" /workspace/scripts/lib/build.sh "$@"
+            ;;
+        ct-ng:menuconfig)
+            exec "$SCRIPT_DIR/lib/docker-runner.sh" /workspace/scripts/lib/ct-ng-menuconfig.sh "$@"
+            ;;
+        ct-ng:olddefconfig)
+            exec "$SCRIPT_DIR/lib/docker-runner.sh" /workspace/scripts/lib/ct-ng-olddefconfig.sh "$@"
+            ;;
+        shell)
+            exec "$SCRIPT_DIR/lib/docker-runner.sh" bash
+            ;;
+        *)
+            # Pass through arbitrary commands
+            exec "$SCRIPT_DIR/lib/docker-runner.sh" "$COMMAND" "$@"
+            ;;
+    esac
+else
+    # Native execution
+    case "$COMMAND" in
+        build)
+            exec "$SCRIPT_DIR/lib/build.sh" "$@"
+            ;;
+        ct-ng:menuconfig)
+            exec "$SCRIPT_DIR/lib/ct-ng-menuconfig.sh" "$@"
+            ;;
+        ct-ng:olddefconfig)
+            exec "$SCRIPT_DIR/lib/ct-ng-olddefconfig.sh" "$@"
+            ;;
+        *)
+            echo "Error: Unknown command '$COMMAND'" >&2
+            echo "Run './scripts/dev' for help" >&2
+            exit 1
+            ;;
+    esac
+fi

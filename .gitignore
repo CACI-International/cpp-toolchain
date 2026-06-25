@@ -1,3 +1,2 @@
 bazel-*
-wut-build-volume
-.docker_cache
+build
