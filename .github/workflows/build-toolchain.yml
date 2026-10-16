@@ -160,37 +160,66 @@ jobs:
           path: |
             build/llvm-prefix/src/llvm-build/CMakeCache.txt
             build/llvm-prefix/src/llvm-build/CMakeFiles/CMakeConfigureLog.yaml
-      - name: Build compiler-rt
-        if: ${{ matrix.target.name == 'x86_64-unknown-linux-gnu' && steps.cache.outputs.cache-hit != 'true' }}
-        run: cmake --build build --parallel -t compiler-rt-package
+      - name: Package runtimes
+        if: ${{ matrix.target.name == 'x86_64-unknown-linux-gnu' }}
+        run: cmake --build build --parallel -t runtimes-package
       - name: Upload built llvm
         uses: actions/upload-artifact@v4
         with:
-          name: llvm-${{ matrix.target.name }}
+          name: ${{ contains(matrix.target.name, 'linux') && 'llvm' || 'built-llvm' }}-${{ matrix.target.name }}
           path: build/llvm-${{ matrix.target.name}}.tar.xz
           if-no-files-found: error
-      - name: Upload built compiler-rt
+      - name: Upload runtimes
         uses: actions/upload-artifact@v4
         if: ${{ matrix.target.name == 'x86_64-unknown-linux-gnu' }}
         with:
-          name: compiler-rt-linux
-          path: build/compiler-rt-linux.tar.xz
+          name: runtimes-linux
+          path: build/runtimes-linux.tar.xz
+          if-no-files-found: error
+
+  # Hosts that can't build the Linux runtimes get them from the x86_64 Linux build
+  add-runtimes:
+    needs: build-llvm
+    strategy:
+      matrix:
+        target:
+          - x86_64-apple-macos
+          - arm64-apple-macos
+          - x86_64-pc-windows-msvc
+    name: add runtimes ${{ matrix.target }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download LLVM
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '{runtimes-linux,built-llvm-${{ matrix.target }}}'
+          merge-multiple: True
+      - name: Add runtimes
+        run: |
+          mkdir final
+          python3 toolchain/scripts/merge.py final/llvm-${{ matrix.target }}.tar.xz llvm-${{ matrix.target }}.tar.xz runtimes-linux.tar.xz
+      - name: Upload LLVM
+        uses: actions/upload-artifact@v4
+        with:
+          name: llvm-${{ matrix.target }}
+          path: final/llvm-${{ matrix.target }}.tar.xz
           if-no-files-found: error
 
   test-bazel-rules:
-    needs: [build-llvm, build-sysroot]
+    needs: [build-llvm, add-runtimes, build-sysroot]
     uses: ./.github/workflows/bazel.yml
     with:
       use-built-toolchain: true
 
   test-cmake-rules:
-    needs: [build-llvm, build-sysroot]
+    needs: [build-llvm, add-runtimes, build-sysroot]
     uses: ./.github/workflows/cmake.yml
     with:
       use-built-toolchain: true
 
   generate-version-info:
-    needs: [build-llvm, build-sysroot]
+    needs: [build-llvm, add-runtimes, build-sysroot]
     uses: ./.github/workflows/version-info.yml
     with:
       use-built-toolchain: true
@@ -205,7 +234,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: '{llvm,sysroot,compiler-rt}-*'
+          pattern: '{llvm,sysroot}-*'
           path: artifacts/
           merge-multiple: True
       - name: Download version info

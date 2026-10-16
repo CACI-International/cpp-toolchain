@@ -1,0 +1,8 @@
+{
+  "directories": [
+    {
+      "source": "@runtimes_dir@",
+      "target": ""
+    }
+  ]
+}
