@@ -9,7 +9,7 @@ def _std_doc(std):
     return "Use {}{} language standard".format(language, version)
 
 FEATURES = {
-    "//feature:debug_symbols": "Generage debug information",
+    "//feature:debug_symbols": "Generate debug information",
     "//feature:hide_symbols": "Set hidden symbol visibility",
     "//feature:strip_unused_dynamic_libs": "Don't link against dynamic libraries that aren't referenced by any symbols",
     "//feature:thinlto": "Link with ThinLTO (incremental link time optimization)",
