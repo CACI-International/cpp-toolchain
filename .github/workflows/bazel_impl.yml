@@ -39,7 +39,7 @@ jobs:
         uses: actions/download-artifact@v4
         if: ${{ inputs.use-built-toolchain }}
         with:
-          pattern: '{llvm-${{ inputs.host }},sysroot-${{ inputs.target }},compiler-rt-linux}'
+          pattern: '{llvm-${{ inputs.host }},sysroot-${{ inputs.target }}}'
           merge-multiple: True
       - name: Configure built toolchain
         if: ${{ inputs.use-built-toolchain }}
@@ -49,7 +49,6 @@ jobs:
           echo "" >> ~/.bazelrc
           echo "build --repo_env=PORTABLE_CC_TOOLCHAIN_LLVM=$WORKSPACE/llvm-${{ inputs.host }}.tar.xz" >> ~/.bazelrc
           echo "build --repo_env=PORTABLE_CC_TOOLCHAIN_SYSROOT=$WORKSPACE/sysroot-${{ inputs.target }}.tar.xz" >> ~/.bazelrc
-          echo "build --repo_env=PORTABLE_CC_TOOLCHAIN_COMPILER_RT_LINUX=$WORKSPACE/compiler-rt-linux.tar.xz" >> ~/.bazelrc
 
       - name: Module Test
         run: cd bazel && bazel test //...

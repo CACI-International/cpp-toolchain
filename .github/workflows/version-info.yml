@@ -21,7 +21,7 @@ jobs:
         uses: actions/download-artifact@v4
         if: ${{ inputs.use-built-toolchain }}
         with:
-          pattern: '{llvm-x86_64-unknown-linux-gnu,sysroot-x86_64-unknown-linux-gnu,compiler-rt-linux}'
+          pattern: '{llvm-x86_64-unknown-linux-gnu,sysroot-x86_64-unknown-linux-gnu}'
           merge-multiple: True
       - name: Configure built toolchain
         if: ${{ inputs.use-built-toolchain }}

@@ -1,6 +1,8 @@
 CT_CONFIG_VERSION="4"
 CT_OBSOLETE=y
 CT_LOCAL_TARBALLS_DIR="${CT_TOP_DIR}/tarballs"
+CT_USE_MIRROR=y
+CT_MIRROR_BASE_URL="https://sources.buildroot.net"
 CT_PREFIX_DIR="${CT_TOP_DIR}/toolchain"
 CT_EXTRA_CFLAGS_FOR_BUILD="-ffile-prefix-map=${CT_TOP_DIR}=/sources"
 CT_EXTRA_CXXFLAGS_FOR_BUILD="-ffile-prefix-map=${CT_TOP_DIR}=/sources"

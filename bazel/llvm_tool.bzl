@@ -47,7 +47,7 @@ def llvm_tool_file(tool):
     """Return the label to an LLVM tool.
 
     Returns a label to the file, rather than an executable rule.
-    This might is useful in repository rules that want to run an LLVM tool.
+    This might be useful in repository rules that want to run an LLVM tool.
 
     Args:
       tool: The name of the tool (e.g. `clang`)
