@@ -161,7 +161,7 @@ jobs:
             build/llvm-prefix/src/llvm-build/CMakeCache.txt
             build/llvm-prefix/src/llvm-build/CMakeFiles/CMakeConfigureLog.yaml
       - name: Package runtimes
-        if: ${{ matrix.target.name == 'x86_64-unknown-linux-gnu' }}
+        if: ${{ matrix.target.name == 'x86_64-unknown-linux-gnu' && steps.cache.outputs.cache-hit != 'true' }}
         run: cmake --build build --parallel -t runtimes-package
       - name: Upload built llvm
         uses: actions/upload-artifact@v4
