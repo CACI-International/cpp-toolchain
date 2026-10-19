@@ -64,6 +64,10 @@ function(download location asset variable)
         set(_url "${_ASSET_URL_${asset}}")
         set(_sha "${_ASSET_SHA256_${asset}}")
         set(_download_dir "${_out}")
+        if(asset MATCHES "compiler-rt")
+            # CMake removes single top level directories, but we don't want that here
+            set(_download_dir "${_out}/lib")
+        endif()
         FetchContent_Declare(
             ${asset}
             URL "${_url}"

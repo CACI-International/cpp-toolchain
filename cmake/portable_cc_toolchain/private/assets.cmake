@@ -1,3 +1,6 @@
+set(_ASSET_URL_compiler-rt-linux "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/compiler-rt-linux.tar.xz")
+set(_ASSET_SHA256_compiler-rt-linux 627560bd36fb81b9f14d9dbd435c7e486fbb2385f90dcd62b417bf08d14c1f69)
+
 set(_ASSET_URL_llvm-aarch64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/llvm-aarch64-unknown-linux-gnu.tar.xz")
 set(_ASSET_SHA256_llvm-aarch64-unknown-linux-gnu 7993be7faada4e6852ff1bc3ce1b6cea9815a6bf6acfcceffa3991dbf6c4d9bb)
 

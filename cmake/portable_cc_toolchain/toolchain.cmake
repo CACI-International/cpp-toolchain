@@ -70,6 +70,13 @@ endif()
 download(_llvm_dir "llvm-${_host_triple}" PORTABLE_CC_TOOLCHAIN_LLVM)
 if("${TARGET_TRIPLE}" MATCHES "linux")
     download(_sysroot_dir "sysroot-${TARGET_TRIPLE}" PORTABLE_CC_TOOLCHAIN_SYSROOT)
+    if(NOT "${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Linux")
+        download(_compiler_rt_dir "compiler-rt-linux" PORTABLE_CC_TOOLCHAIN_COMPILER_RT_LINUX)
+        set(_overlay_dir "${CMAKE_BINARY_DIR}/_portable_cc_toolchain/llvm-overlay-${_host_triple}")
+        file(MAKE_DIRECTORY "${_overlay_dir}")
+        execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${_llvm_dir}" "${_compiler_rt_dir}" "${_overlay_dir}")
+        set(_llvm_dir "${_overlay_dir}")
+    endif()
 endif()
 
 
