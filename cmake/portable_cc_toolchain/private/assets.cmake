@@ -1,33 +1,30 @@
-set(_ASSET_URL_compiler-rt-linux "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/compiler-rt-linux.tar.xz")
-set(_ASSET_SHA256_compiler-rt-linux 627560bd36fb81b9f14d9dbd435c7e486fbb2385f90dcd62b417bf08d14c1f69)
+set(_ASSET_URL_llvm-aarch64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/llvm-aarch64-unknown-linux-gnu.tar.xz")
+set(_ASSET_SHA256_llvm-aarch64-unknown-linux-gnu 477414e9fdce6e940d49f874ef81c4fe39292d45365848f5786468de86b0ec40)
 
-set(_ASSET_URL_llvm-aarch64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/llvm-aarch64-unknown-linux-gnu.tar.xz")
-set(_ASSET_SHA256_llvm-aarch64-unknown-linux-gnu 7993be7faada4e6852ff1bc3ce1b6cea9815a6bf6acfcceffa3991dbf6c4d9bb)
+set(_ASSET_URL_llvm-arm64-apple-macos "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/llvm-arm64-apple-macos.tar.xz")
+set(_ASSET_SHA256_llvm-arm64-apple-macos 9fc1d107c17e402dc9c8161624db8bb3788854f763838f5835b6027e4a64f223)
 
-set(_ASSET_URL_llvm-arm64-apple-macos "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/llvm-arm64-apple-macos.tar.xz")
-set(_ASSET_SHA256_llvm-arm64-apple-macos af9b25cf41b82da2f557f93e97f093e05bb9650f82e195fd71fb1c095cb1da0f)
+set(_ASSET_URL_llvm-x86_64-apple-macos "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/llvm-x86_64-apple-macos.tar.xz")
+set(_ASSET_SHA256_llvm-x86_64-apple-macos f48cd3b6b87fdb9ccf45e04dba3cb2b8e1821eeeb96efbcf88e41cd7367e04ba)
 
-set(_ASSET_URL_llvm-x86_64-apple-macos "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/llvm-x86_64-apple-macos.tar.xz")
-set(_ASSET_SHA256_llvm-x86_64-apple-macos 1103edf318e11d547b3035bf84ac572a863e2235fe6469bedca9f8e5d1de63ba)
+set(_ASSET_URL_llvm-x86_64-pc-windows-msvc "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/llvm-x86_64-pc-windows-msvc.tar.xz")
+set(_ASSET_SHA256_llvm-x86_64-pc-windows-msvc 045160091963ebda6b0613c833e7134e9ff265329c0199b6899bf2985580bb95)
 
-set(_ASSET_URL_llvm-x86_64-pc-windows-msvc "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/llvm-x86_64-pc-windows-msvc.tar.xz")
-set(_ASSET_SHA256_llvm-x86_64-pc-windows-msvc 20904cad11d8c944b298a90a9f297e61278c06134f14ac7e183a1e99b10815af)
+set(_ASSET_URL_llvm-x86_64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/llvm-x86_64-unknown-linux-gnu.tar.xz")
+set(_ASSET_SHA256_llvm-x86_64-unknown-linux-gnu 62df4637cb99fd94b54e12d368227c2e0066518e4e517ec37bd3e729a69a5e74)
 
-set(_ASSET_URL_llvm-x86_64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/llvm-x86_64-unknown-linux-gnu.tar.xz")
-set(_ASSET_SHA256_llvm-x86_64-unknown-linux-gnu 8fbba883782b69287ec0a96526ff9f188832fb27e63e67aacca1da08be50caa5)
+set(_ASSET_URL_sysroot-aarch64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/sysroot-aarch64-unknown-linux-gnu.tar.xz")
+set(_ASSET_SHA256_sysroot-aarch64-unknown-linux-gnu 4d64a5d87e2f6c94c145d2e13c10f9d25b0ccc139798a7e38858f10f68b7b85b)
 
-set(_ASSET_URL_sysroot-aarch64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/sysroot-aarch64-unknown-linux-gnu.tar.xz")
-set(_ASSET_SHA256_sysroot-aarch64-unknown-linux-gnu f22827a6de790169ac57400031f6d7075792778fa91a16d87dbe76c28a1eecac)
+set(_ASSET_URL_sysroot-aarch64-unknown-linux-musl "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/sysroot-aarch64-unknown-linux-musl.tar.xz")
+set(_ASSET_SHA256_sysroot-aarch64-unknown-linux-musl 9708c3862e0a622bd1b40187dd74c260a48ed0780b772448b2001df90e7491b7)
 
-set(_ASSET_URL_sysroot-aarch64-unknown-linux-musl "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/sysroot-aarch64-unknown-linux-musl.tar.xz")
-set(_ASSET_SHA256_sysroot-aarch64-unknown-linux-musl 370355279d762005491f3e36b5e1898f7ce277c98064ea6db19d006c9202168e)
+set(_ASSET_URL_sysroot-armv7-unknown-linux-gnueabihf "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/sysroot-armv7-unknown-linux-gnueabihf.tar.xz")
+set(_ASSET_SHA256_sysroot-armv7-unknown-linux-gnueabihf f522f43a488398a9c59978a2d31b8341664d0d938b339c9bf88693d09cc8f6d6)
 
-set(_ASSET_URL_sysroot-armv7-unknown-linux-gnueabihf "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/sysroot-armv7-unknown-linux-gnueabihf.tar.xz")
-set(_ASSET_SHA256_sysroot-armv7-unknown-linux-gnueabihf 514e93cdf502c00559d97f8102b2507b3ff7361c07a1df26774f38790bba925c)
+set(_ASSET_URL_sysroot-x86_64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/sysroot-x86_64-unknown-linux-gnu.tar.xz")
+set(_ASSET_SHA256_sysroot-x86_64-unknown-linux-gnu 5830d9259622ca709b4f21f0be9e37a7e42ea7aa824fefa19c61e313d9f0061f)
 
-set(_ASSET_URL_sysroot-x86_64-unknown-linux-gnu "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/sysroot-x86_64-unknown-linux-gnu.tar.xz")
-set(_ASSET_SHA256_sysroot-x86_64-unknown-linux-gnu 11a0a965b9429360d12633d15486000e3c8f2bca543f405346c7994db99c159b)
-
-set(_ASSET_URL_sysroot-x86_64-unknown-linux-musl "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.06.26/sysroot-x86_64-unknown-linux-musl.tar.xz")
-set(_ASSET_SHA256_sysroot-x86_64-unknown-linux-musl cbc6472b6a2d95151ff7bca339eed26fa2316723b333d007859c3694eaa6541d)
+set(_ASSET_URL_sysroot-x86_64-unknown-linux-musl "https://github.com/CACI-International/cpp-toolchain/releases/download/toolchain-2026.10.20/sysroot-x86_64-unknown-linux-musl.tar.xz")
+set(_ASSET_SHA256_sysroot-x86_64-unknown-linux-musl 8b6bdabf51a5aa6331f5dc3a047a8f0b74393f6a5432539222224b75563a7854)
 
